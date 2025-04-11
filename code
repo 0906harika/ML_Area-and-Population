@@ -1,0 +1,23 @@
+import pandas as pd
+import numpy as np
+cities =pd.read_csv('/content/california_cities.csv')
+cities.head()
+latitude,logitude=cities["latd"],cities["longd"]
+population,area=cities["population_total"],cities["area_total_km2"]
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+sns.set()
+plt.scatter(logitude,latitude,label=None, c=np.log10(population), 
+            cmap='viridis', s=area, linewidth=0, alpha=0.5)
+# Instead of plt.axis(aspect='equal'), use plt.gca().set_aspect('equal')
+plt.gca().set_aspect('equal')  # Set the aspect ratio using the 'set_aspect' method of the axes object
+plt.xlabel('Longitude')
+plt.ylabel('Longitude')
+plt.colorbar(label='log$_{10}$(population)')
+plt.clim(3,7)
+for area in [100,300,700]:
+  plt.scatter([],[],c='k',alpha=0.3,s=area,label=str(area)+'km$^2$')
+plt.legend(scatterpoints=1,frameon=False,labelspacing=1,title='City Area')
+plt.title('Area and population of california cities')
+plt.show()
